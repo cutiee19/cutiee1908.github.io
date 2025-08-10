@@ -95,7 +95,7 @@
   <!-- PAGE 4 -->
   <section id="page4">
     <h1>ARE YOU READY TO SEE SOME MEMORIES OF US ?</h1>
-    <a href="#page5" id="goToPage5">NEXT</a>
+    <a href="#page5" id="goToPage4">NEXT</a>
   </section>
 
   <!-- PAGE 5 -->
@@ -106,42 +106,39 @@
     <div class="playing-text">I Love You Forever And Ever di Pondatiii 💐🫂💝</div> <br><br>
      <h2><span style="background-color:#cf38e3; padding: 5px 10px; border-radius: 10px;">Scroll Down ⬇️</span></h2>
      </center>
-     <!-- Single audio element -->
-     <!-- Single audio element -->
-     <audio id="myAudio" src="song/saiyaara.mp3" preload="auto" playsinline loop></audio>
-     <!-- Your NEXT link -->
-   </section>
-<script>
-  const audio = document.getElementById("myAudio");
-  const startTime = 142; // 2:22
-  const endTime = 252;   // 4:12
+   <!-- Single audio element -->
+<audio id="myAudio" preload="auto">
+      <!-- background audio (edit src to the right file: song/perfect.mp3 or song/saiyaara.mp3) -->
+      <audio id="bg-audio" src="song/saiyaara.mp3" autoplay muted playsinline loop></audio>
+      <source src="song/saiyaara.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </section>
 
-  // Play audio when NEXT link is clicked
-  document.getElementById("goToPage4").addEventListener("click", (e) => {
-    e.preventDefault(); // Stop immediate navigation
+  <script>
+    const audio = document.getElementById("myAudio");
+    const startTime = 142; // Start at 2:22
+    const endTime = 252;   // End at 4:12
 
-    // Allow audio to start playing after click
-    audio.currentTime = startTime;
-    audio.play().then(() => {
-      // Navigate to page4 after slight delay
+    document.getElementById("goToPage4").addEventListener("click", (e) => {
+      // Wait a bit to allow section to scroll in
       setTimeout(() => {
-        window.location.href = "page4.html";
-      }, 500);
-    }).catch(err => {
-      console.log("Autoplay blocked:", err);
+        audio.currentTime = startTime;
+        audio.play().catch(err => {
+          console.log("Autoplay blocked:", err);
+        });
+      }, 800);
     });
-  });
 
-  // Manual loop between startTime and endTime
-  audio.addEventListener("timeupdate", () => {
-    if (audio.currentTime >= endTime) {
-      audio.currentTime = startTime;
-      audio.play();
-    }
-  });
-</script>
-      <h1><span style="background-color:#ffa07a; padding: 5px 10px; border-radius: 10px;">Our Beautiful Memories...</span></h1>
-     <center>
+    audio.addEventListener("timeupdate", () => {
+      if (audio.currentTime >= endTime) {
+        audio.currentTime = startTime;
+        audio.play(); // Loop manually
+      }
+    });
+  </script>
+  <h1><span style="background-color:#ffa07a; padding: 5px 10px; border-radius: 10px;">Our Beautiful Memories...</span></h1>
+    <center>
       <!-- Card 1 -->
      <h2><span style="background-color:#98f8d0; padding: 5px 10px; border-radius: 10px;">Butterfly Moment 🦋</span></h2>
       </center>
@@ -211,5 +208,8 @@
       <h2>Kadasi valiyum naa pota BOOMER ha lam paathathu ku NANDRI 🙏🙏🙏</h2>
       <h1>THE END ! 🙏🙏🙏</h1>
     </center>
-  </body>
+
+    
+</body>
 </html>
+
