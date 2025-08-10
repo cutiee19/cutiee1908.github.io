@@ -86,38 +86,37 @@
     <br><br>
 
     <!-- Hidden Audio -->
-    <audio id="myAudio" preload="auto">
       <!-- background audio (edit src to the right file: song/perfect.mp3 or song/saiyaara.mp3) -->
-     <audio id="bg-audio" src="song/perfect.mp3" autoplay muted playsinline loop></audio>
+     <!-- Background music -->
+      <audio id="bg-audio" src="song/perfect.mp3" autoplay muted playsinline loop></audio>
+     <!-- Example: Go to page 3 button -->
+     <a href="page4.html" class="bottom-right-link">NEXT</a>
 
-      <source src="song/perfect.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
+     <script>
+     const audio = document.getElementById("bg-audio");
+     const startTime = 3; // start position in seconds
+     const endTime = 95; // end position in seconds
 
-    <!-- Bottom right NEXT link (only in page3) -->
-    <a href="page4.html" class="bottom-right-link">NEXT</a>
-  </section>
-
-  <script>
-    const audio = document.getElementById("myAudio");
-    const startTime = 3;
-    const endTime = 95;
-
-    document.getElementById("goToPage3").addEventListener("click", () => {
-      setTimeout(() => {
-        audio.currentTime = startTime;
-        audio.play().catch(err => {
-          console.log("Autoplay blocked:", err);
-        });
-      }, 500);
+     // When user clicks "Go to Page 3"
+     document.getElementById("goToPage3").addEventListener("click", () => {
+     audio.muted = false; // unmute when user interacts
+     audio.currentTime = startTime;
+     audio.play().catch(err => {
+      console.log("Autoplay blocked:", err);
     });
 
-    audio.addEventListener("timeupdate", () => {
-      if (audio.currentTime >= endTime) {
-        audio.currentTime = startTime;
-        audio.play();
-      }
-    });
+    // Your logic to show page 3 content here
+  });
+
+    // Loop between startTime and endTime
+     audio.addEventListener("timeupdate", () => {
+    if (audio.currentTime >= endTime) {
+      audio.currentTime = startTime;
+      audio.play();
+    }
+  });
+
+   
 
     // Typing effect
     const text = `Today August 19... 
