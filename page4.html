@@ -107,7 +107,7 @@
      <h2><span style="background-color:#cf38e3; padding: 5px 10px; border-radius: 10px;">Scroll Down ⬇️</span></h2>
      </center>
    <!-- Single audio element -->
-<audio id="myAudio" autoplay loop muted> 
+<audio id="myAudio" autoplay muted loop> 
       <!-- background audio (edit src to the right file: song/perfect.mp3 or song/saiyaara.mp3) -->
   <source src="song/saiyaara.mp3" type="audio/mpeg">
    your browser does not support the audio element.
@@ -119,7 +119,7 @@
     const startTime = 142; // Start at 2:22
     const endTime = 252;   // End at 4:12
 
-    document.getElementById("goToPage4").addEventListener("click", (e) => {
+    document.getElementById("goToPage4").addEventListener("click", ( ) => {
       // Wait a bit to allow section to scroll in
       setTimeout(() => {
         audio.currentTime = startTime;
