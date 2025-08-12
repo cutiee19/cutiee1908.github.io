@@ -59,7 +59,7 @@
   </style>
 </head>
 <body>
-  <!-- PAGE 2-->
+   <!-- PAGE 2-->
   <section id="page2">
     <center>
       <p>
@@ -84,39 +84,57 @@
     <h3>Welcome to World "BOOMER"</h3>
     <div id="typing-container"></div>
     <br><br>
+ <!-- Single audio element (preload, playsinline for mobile) -->
+  <audio id="myAudio" preload="auto" playsinline loop>
+    <!-- Use absolute URL if you prefer; relative path is fine if file is in repo/song/ -->
+    <source src="song/perfect.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+    <a href="page4.html" class="bottom-right-link">NEXT</a>
+</section>
+  <script>
+  const audio = document.getElementById("myAudio");
+  const startTime = 3; 
+  const endTime = 95;   
+  const btn = document.getElementById("goToPage2");
 
-    <!-- Hidden Audio -->
-      <!-- background audio (edit src to the right file: song/perfect.mp3 or song/saiyaara.mp3) -->
-     <!-- Background music -->
-      <audio id="bg-audio" src="song/perfect.mp3" autoplay muted playsinline loop></audio>
-     <!-- Example: Go to page 3 button -->
-     <a href="page4.html" class="bottom-right-link">NEXT</a>
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault(); // stop immediate fragment navigation
 
-     <script>
-     const audio = document.getElementById("bg-audio");
-     const startTime = 3; // start position in seconds
-     const endTime = 95; // end position in seconds
+    // Unmute only on user gesture (required by browsers)
+    audio.muted = false;
 
-     // When user clicks "Go to Page 3"
-     document.getElementById("goToPage3").addEventListener("click", () => {
-     audio.muted = false; // unmute when user interacts
-     audio.currentTime = startTime;
-     audio.play().catch(err => {
-      console.log("Autoplay blocked:", err);
-    });
+    // Try to set the start time. If the audio isn't ready, wait for canplay
+    try {
+      audio.currentTime = startTime;
+    } catch (err) {
+      // If setting currentTime throws, wait until the file can play then set it
+      await new Promise(resolve => audio.addEventListener("canplay", resolve, { once: true }));
+      audio.currentTime = startTime;
+    }
 
-    // Your logic to show page 3 content here
+    // Try to play (user gesture makes this permitted)
+    try {
+      await audio.play();
+    } catch (err) {
+      console.warn("Audio play() failed:", err);
+      // fallback: navigate anyway so the user can manually press play on next screen
+      document.getElementById("page4").scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    // After audio starts, scroll to the page5 section smoothly
+    document.getElementById("page4").scrollIntoView({ behavior: "smooth" });
   });
 
-    // Loop between startTime and endTime
-     audio.addEventListener("timeupdate", () => {
+  // Loop between startTime and endTime
+  audio.addEventListener("timeupdate", () => {
     if (audio.currentTime >= endTime) {
       audio.currentTime = startTime;
-      audio.play();
+      // play again (ignore any rejection)
+      audio.play().catch(() => {});
     }
   });
-
-   
 
     // Typing effect
     const text = `Today August 19... 
