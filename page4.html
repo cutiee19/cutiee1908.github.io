@@ -107,9 +107,9 @@
      <h2><span style="background-color:#cf38e3; padding: 5px 10px; border-radius: 10px;">Scroll Down ⬇️</span></h2>
      </center>
    <!-- Single audio element -->
-<audio id="myAudio" preload="auto">
+<audio id="myAudio" autoplay loop muted> 
       <!-- background audio (edit src to the right file: song/perfect.mp3 or song/saiyaara.mp3) -->
-  <source src="https://github.com/cutiee19/cutiee1908.github.io/blob/main/song/saiyaara.mp3" type="audio/mpeg">
+  <source src="song/saiyaara.mp3" type="audio/mpeg">
    your browser does not support the audio element.
     </audio>
   </section>
@@ -123,6 +123,7 @@
       // Wait a bit to allow section to scroll in
       setTimeout(() => {
         audio.currentTime = startTime;
+        audio.muted = false;
         audio.play().catch(err => {
           console.log("Autoplay blocked:", err);
         });
