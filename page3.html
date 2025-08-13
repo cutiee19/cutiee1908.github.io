@@ -84,49 +84,59 @@
   <br><br>
 
   <!-- Audio -->
-  <audio id="myAudio" preload="auto" playsinline loop>
+   <audio id="myAudio" preload="auto" playsinline loop>
+    <!-- Use absolute URL if you prefer; relative path is fine if file is in repo/song/ -->
     <source src="song/perfect.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
+   <a href="page4.html" class="bottom-right-link">NEXT</a>
+</section>
 
-  <a href="page4.html" class="bottom-right-link">NEXT</a>
 </section>
 
 <script>
-const audio = document.getElementById("myAudio");
-const startTime = 3;  // seconds
-const endTime = 95;   // seconds
+  const audio = document.getElementById("myAudio");
+  const startTime = 3;
+  const endTime = 95;   
+  const btn = document.getElementById("goToPage2");
 
-// Correct button reference
-const btn = document.getElementById("goToPage3");
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault(); // stop immediate fragment navigation
 
-btn.addEventListener("click", async (e) => {
-  // Let anchor navigate to #page3 but ensure audio starts after click
-  audio.muted = false;
+    // Unmute only on user gesture (required by browsers)
+    audio.muted = false;
 
-  try {
-    // Wait until file can be played
-    await new Promise(resolve => {
-      if (audio.readyState >= 2) {
-        resolve();
-      } else {
-        audio.addEventListener("canplay", resolve, { once: true });
-      }
-    });
-    audio.currentTime = startTime;
-    await audio.play();
-  } catch (err) {
-    console.warn("Audio play failed:", err);
-  }
-});
+    // Try to set the start time. If the audio isn't ready, wait for canplay
+    try {
+      audio.currentTime = startTime;
+    } catch (err) {
+      // If setting currentTime throws, wait until the file can play then set it
+      await new Promise(resolve => audio.addEventListener("canplay", resolve, { once: true }));
+      audio.currentTime = startTime;
+    }
 
-// Loop between startTime and endTime
-audio.addEventListener("timeupdate", () => {
-  if (audio.currentTime >= endTime) {
-    audio.currentTime = startTime;
-    audio.play().catch(() => {});
-  }
-});
+    // Try to play (user gesture makes this permitted)
+    try {
+      await audio.play();
+    } catch (err) {
+      console.warn("Audio play() failed:", err);
+      // fallback: navigate anyway so the user can manually press play on next screen
+      document.getElementById("page3").scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    // After audio starts, scroll to the page5 section smoothly
+    document.getElementById("page3").scrollIntoView({ behavior: "smooth" });
+  });
+
+  // Loop between startTime and endTime
+  audio.addEventListener("timeupdate", () => {
+    if (audio.currentTime >= endTime) {
+      audio.currentTime = startTime;
+      // play again (ignore any rejection)
+      audio.play().catch(() => {});
+    }
+  });
     // Typing effect
     const text = `Today August 19... 
 Most important day in my life...And...Yes, It's my babe's 18th Birthday 🥳🤩...
