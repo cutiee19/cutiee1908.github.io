@@ -55,74 +55,74 @@
       bottom: 20px;
       right: 20px;
      }
-   
-  </style>
-</head>
-<body>
- <section id="page2">
-  <center>
-    <h1>DISCLAIMER</h1>
-    <hr>
-    <h2>
-      A BOOMER ALERT...<br><br>
-      BETTER TO AVOID THE NEXT PAGE <br><br>
-      IF YOU DON'T WANT TO... <br><br>
-    </h2>
-    THEN CLICK HERE <br><br>
-    <a href="#page3" id="goToPage3">NEXT</a>
-    <h2>OR</h2>
-    CLICK HERE TO GO PAGE 4<br><br>
-    <a href="page4.html">PAGE 4</a>
-  </center>
-</section>
+    </style>
+   </head>
+   <body>
+  <!-- PAGE 2 -->
+  <section id="page2">
+    <center>
+      <h1>DISCLAIMER</h1>
+      <hr>
+      <h2>
+        A BOOMER ALERT...<br><br>
+        BETTER TO AVOID THE NEXT PAGE <br><br>
+        IF YOU DON'T WANT TO... <br><br>
+      </h2>
+      THEN CLICK HERE <br><br>
+      <a href="#page3" id="goToPage3">NEXT</a>
+      <h2>OR</h2>
+      CLICK HERE TO GO PAGE 4<br><br>
+      <a href="page4.html">PAGE 4</a>
+    </center>
+  </section>
 
-<!-- PAGE 3-->
-<section id="page3">
-  <h3>Welcome to World "BOOMER"</h3>
-  <div id="typing-container"></div>
-  <br><br>
+  <!-- PAGE 3 -->
+  <section id="page3">
+    <h3>Welcome to World "BOOMER"</h3>
+    <div id="typing-container"></div>
+    <br><br>
 
-  <!-- Audio -->
-  <audio id="myAudio" preload="auto" playsinline loop>
-    <source src="song/perfect.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+    <!-- Audio -->
+    <audio id="myAudio" preload="auto" playsinline loop>
+      <source src="song/perfect.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
 
-  <a href="page4.html" class="bottom-right-link">NEXT</a>
-</section>
+    <a href="page4.html" class="bottom-right-link">NEXT</a>
+  </section>
 
-<script>
-  const audio = document.getElementById("myAudio");
-  const startTime = 3;
-  const endTime = 95;   
-  const btn = document.getElementById("goToPage3"); // FIX: correct ID
+  <script>
+    const audio = document.getElementById("myAudio");
+    const startTime = 3;
+    const endTime = 95;   
+    const btn = document.getElementById("goToPage3");
 
-  btn.addEventListener("click", async (e) => {
-    e.preventDefault(); // stop immediate jump
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault(); // stop immediate jump
 
-    audio.muted = false;
+      audio.muted = false;
 
-    if (audio.readyState < 2) {
-      await new Promise(resolve => audio.addEventListener("canplay", resolve, { once: true }));
-    }
+      if (audio.readyState < 2) {
+        await new Promise(resolve => audio.addEventListener("canplay", resolve, { once: true }));
+      }
 
-    audio.currentTime = startTime;
-
-    try {
-      await audio.play();
-    } catch (err) {
-      console.warn("Audio play() failed:", err);
-    }
-
-    document.getElementById("page3").scrollIntoView({ behavior: "smooth" });
-  });
-
-  audio.addEventListener("timeupdate", () => {
-    if (audio.currentTime >= endTime) {
       audio.currentTime = startTime;
-      audio.play().catch(() => {});
-    }
-  });
+
+      try {
+        await audio.play();
+      } catch (err) {
+        console.warn("Audio play() failed:", err);
+      }
+
+      document.getElementById("page3").scrollIntoView({ behavior: "smooth" });
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      if (audio.currentTime >= endTime) {
+        audio.currentTime = startTime;
+        audio.play().catch(() => {});
+      }
+    });
 
     // Typing effect
     const text = `Today August 19... 
@@ -147,7 +147,6 @@ Once again Happy Birthday di Pondatiii 🌍 !
 Here's to many more years of laughter, love, and beautiful memories together.`;
 
     const container = document.getElementById("typing-container");
-
     const cursor = document.createElement("span");
     cursor.className = "cursor";
     container.appendChild(cursor);
@@ -162,9 +161,7 @@ Here's to many more years of laughter, love, and beautiful memories together.`;
       }
     }
 
-    window.onload = () => {
-      typeNextChar();
-    };
+    window.onload = typeNextChar;
   </script>
 </body>
 </html>
